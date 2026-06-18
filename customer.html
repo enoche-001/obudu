@@ -287,37 +287,162 @@
     .toast.show { transform:translateX(-50%) translateY(0); }
 
 
-    /* ── RECEIPT MODAL ── */
+    /* ── PROCESSING / WAIT MODAL ── */
+    .processing-backdrop {
+      display:none; position:fixed; inset:0; z-index:500;
+      background:rgba(10,8,6,0.82); backdrop-filter:blur(6px);
+      align-items:center; justify-content:center; padding:20px;
+    }
+    .processing-backdrop.open { display:flex; }
+    .processing-box {
+      background:#fff; border-radius:20px; width:min(360px,100%);
+      padding:36px 28px 32px; text-align:center;
+      box-shadow:0 32px 80px rgba(0,0,0,0.35);
+      animation:proc-in 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes proc-in { from{opacity:0;transform:scale(0.85) translateY(16px)} to{opacity:1;transform:scale(1) translateY(0)} }
+    .proc-spinner {
+      width:56px; height:56px; border-radius:50%;
+      border:5px solid #f0ebe4;
+      border-top-color:var(--accent);
+      animation:spin 0.9s linear infinite;
+      margin:0 auto 20px;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .proc-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:22px; font-weight:700; color:var(--charcoal);
+      margin-bottom:8px;
+    }
+    .proc-sub {
+      font-size:13px; color:var(--mid); line-height:1.6; max-width:260px; margin:0 auto;
+    }
+    .proc-steps {
+      margin-top:20px; display:flex; flex-direction:column; gap:8px; text-align:left;
+    }
+    .proc-step {
+      display:flex; align-items:center; gap:10px;
+      font-size:12px; color:#9A9288; padding:6px 10px;
+      border-radius:8px; background:#faf8f5; transition:all 0.3s;
+    }
+    .proc-step.active { color:var(--charcoal); background:#f0ebe4; font-weight:600; }
+    .proc-step.done { color:#1a9e4a; background:#f0faf4; }
+    .proc-step-icon { width:18px; height:18px; flex-shrink:0; font-size:14px; text-align:center; }
+    .proc-warning {
+      margin-top:18px; font-size:11px; color:#b08000;
+      background:#fffbea; border:1px solid #f0d060;
+      border-radius:8px; padding:9px 12px; line-height:1.6;
+    }
+
+    /* ── RECEIPT MODAL (bank-style) ── */
     .receipt-backdrop {
       display:none; position:fixed; inset:0; z-index:400;
-      background:rgba(0,0,0,0.55); backdrop-filter:blur(3px);
+      background:rgba(0,0,0,0.60); backdrop-filter:blur(4px);
       align-items:center; justify-content:center; padding:16px;
     }
     .receipt-backdrop.open { display:flex; }
     .receipt-box {
-      background:#fff; border-radius:16px; width:min(420px,100%);
-      max-height:90vh; overflow-y:auto;
-      box-shadow:0 24px 60px rgba(0,0,0,0.2);
+      background:#fff; border-radius:0; width:min(400px,100%);
+      max-height:94vh; overflow-y:auto;
+      box-shadow:0 24px 60px rgba(0,0,0,0.3);
       animation:rcpt-in 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      font-family:'Jost',sans-serif;
     }
-    @keyframes rcpt-in { from{opacity:0;transform:scale(0.88)} to{opacity:1;transform:scale(1)} }
+    @keyframes rcpt-in { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Receipt Header */
     .rcpt-head {
       background:var(--accent); color:#fff;
-      padding:22px 24px 18px; text-align:center;
+      padding:0; text-align:center; position:relative;
     }
-    .rcpt-check { font-size:40px; line-height:1; margin-bottom:8px; }
-    .rcpt-head h2 { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:700; margin-bottom:4px; }
-    .rcpt-head p { font-size:12px; opacity:0.85; letter-spacing:0.3px; }
-    .rcpt-body { padding:20px 24px; }
-    .rcpt-row { display:flex; justify-content:space-between; align-items:flex-start; padding:9px 0; border-bottom:1px solid var(--border); font-size:13px; gap:12px; }
+    .rcpt-head-logo {
+      padding:20px 24px 14px;
+      border-bottom:1px solid rgba(255,255,255,0.18);
+    }
+    .rcpt-head-logo h2 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:22px; font-weight:700; letter-spacing:0.5px; margin:0 0 2px;
+    }
+    .rcpt-head-logo p {
+      font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
+      opacity:0.75; margin:0;
+    }
+    .rcpt-head-status {
+      padding:14px 24px 18px;
+    }
+    .rcpt-status-badge {
+      display:inline-flex; align-items:center; gap:7px;
+      background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3);
+      border-radius:100px; padding:6px 16px; font-size:12px;
+      font-weight:700; letter-spacing:0.5px; text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .rcpt-status-dot { width:7px; height:7px; border-radius:50%; background:#4ade80; }
+    .rcpt-head-status p { font-size:11px; opacity:0.8; margin:0; }
+
+    /* Receipt Section Divider */
+    .rcpt-section-label {
+      font-size:9px; letter-spacing:2px; text-transform:uppercase;
+      color:#9A9288; padding:12px 20px 6px; font-weight:700;
+      border-top:1px solid #f0ebe4;
+    }
+    .rcpt-section-label:first-child { border-top:none; }
+
+    /* Receipt Rows */
+    .rcpt-body { padding:0; }
+    .rcpt-row {
+      display:flex; justify-content:space-between; align-items:flex-start;
+      padding:9px 20px; border-bottom:1px solid #f5f2ee;
+      font-size:13px; gap:12px;
+    }
     .rcpt-row:last-child { border-bottom:none; }
-    .rcpt-lbl { color:var(--mid); font-weight:500; flex-shrink:0; }
-    .rcpt-val { color:var(--charcoal); font-weight:600; text-align:right; word-break:break-all; }
-    .rcpt-items { padding:10px 0; }
-    .rcpt-item-line { font-size:12px; color:var(--mid); padding:3px 0; display:flex; justify-content:space-between; }
-    .rcpt-total-row { display:flex; justify-content:space-between; padding:12px 0 4px; font-size:16px; font-weight:700; color:var(--charcoal); }
-    .rcpt-total-row span:last-child { color:var(--purple3); }
-    .rcpt-actions { padding:0 24px 24px; display:flex; flex-direction:column; gap:10px; }
+    .rcpt-lbl { color:#9A9288; font-weight:500; flex-shrink:0; font-size:12px; padding-top:1px; }
+    .rcpt-val { color:#1A1612; font-weight:600; text-align:right; word-break:break-all; font-size:13px; }
+    .rcpt-val.mono { font-family:monospace; font-size:12px; letter-spacing:0.5px; }
+
+    /* Items block */
+    .rcpt-items-block { padding:0 20px 4px; }
+    .rcpt-item-line {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:7px 0; border-bottom:1px dashed #f0ebe4; font-size:13px;
+    }
+    .rcpt-item-line:last-child { border-bottom:none; }
+    .rcpt-item-name { color:#1A1612; font-weight:500; }
+    .rcpt-item-qty { color:#9A9288; font-size:11px; }
+    .rcpt-item-price { color:#1A1612; font-weight:700; }
+
+    /* Total bar */
+    .rcpt-total-bar {
+      display:flex; justify-content:space-between; align-items:center;
+      background:var(--charcoal); color:#fff;
+      padding:14px 20px; margin:0;
+    }
+    .rcpt-total-bar .rcpt-total-lbl { font-size:12px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; opacity:0.75; }
+    .rcpt-total-bar .rcpt-total-amt { font-size:22px; font-weight:800; font-family:'Jost',sans-serif; }
+
+    /* Footer */
+    .rcpt-footer {
+      padding:12px 20px; background:#faf8f5;
+      border-top:1px solid #f0ebe4; text-align:center;
+    }
+    .rcpt-footer p { font-size:10px; color:#9A9288; margin:0 0 2px; line-height:1.5; }
+    .rcpt-footer .rcpt-verified {
+      display:inline-flex; align-items:center; gap:5px;
+      font-size:10px; color:#1a9e4a; font-weight:700; margin-top:6px;
+    }
+
+    /* Perforated tear line */
+    .rcpt-tear {
+      height:12px; background:
+        radial-gradient(circle at 0 50%, #fff 6px, transparent 6px),
+        radial-gradient(circle at 100% 50%, #fff 6px, transparent 6px);
+      background-repeat:repeat-x;
+      background-size:16px 12px;
+      background-color:#f0ebe4;
+    }
+
+    /* Actions */
+    .rcpt-actions { padding:16px 20px 20px; display:flex; flex-direction:column; gap:10px; background:#fff; }
     .rcpt-wa-btn {
       background:#25D366; color:#fff; border:none;
       padding:14px; border-radius:8px; font-family:'Jost',sans-serif;
@@ -327,11 +452,12 @@
     }
     .rcpt-wa-btn:hover { background:#1ebe5d; }
     .rcpt-close-btn {
-      background:var(--bg); color:var(--mid); border:1.5px solid var(--border);
+      background:#fff; color:#5A5248; border:1.5px solid #D8D2C8;
       padding:12px; border-radius:8px; font-family:'Jost',sans-serif;
       font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;
+      text-align:center;
     }
-    .rcpt-close-btn:hover { border-color:var(--purple); color:var(--purple); }
+    .rcpt-close-btn:hover { border-color:var(--accent); color:var(--accent); }
 
     /* ── WHATSAPP FLOAT ── */
     .wa-float {
@@ -446,38 +572,132 @@
     </div>
   </div>
 
-  <!-- RECEIPT MODAL -->
+  <!-- PROCESSING / WAIT MODAL -->
+  <div class="processing-backdrop" id="processingBackdrop">
+    <div class="processing-box">
+      <div class="proc-spinner"></div>
+      <div class="proc-title">Please Wait…</div>
+      <p class="proc-sub">We're confirming your payment and preparing your receipt. <strong>Do not close this page.</strong></p>
+      <div class="proc-steps">
+        <div class="proc-step active" id="procStep1">
+          <span class="proc-step-icon">🔐</span>
+          <span>Verifying payment with Paystack</span>
+        </div>
+        <div class="proc-step" id="procStep2">
+          <span class="proc-step-icon">📋</span>
+          <span>Saving your order</span>
+        </div>
+        <div class="proc-step" id="procStep3">
+          <span class="proc-step-icon">🧾</span>
+          <span>Generating receipt</span>
+        </div>
+      </div>
+      <div class="proc-warning">
+        ⚠️ Stay on this page — your receipt will appear in a moment.
+      </div>
+    </div>
+  </div>
+
+  <!-- RECEIPT MODAL (Bank-style) -->
   <div class="receipt-backdrop" id="receiptBackdrop">
     <div class="receipt-box">
+
+      <!-- Header: Business identity -->
       <div class="rcpt-head">
-        <div class="rcpt-check">✅</div>
-        <h2>Payment Successful!</h2>
-        <p>Your order has been confirmed and sent to us.</p>
+        <div class="rcpt-head-logo">
+          <h2>Obudu Place</h2>
+          <p>Official Payment Receipt</p>
+        </div>
+        <div class="rcpt-head-status">
+          <div class="rcpt-status-badge">
+            <span class="rcpt-status-dot"></span>
+            Payment Confirmed
+          </div>
+          <p id="rcptDateTime">—</p>
+        </div>
       </div>
+
       <div class="rcpt-body">
-        <div class="rcpt-row"><span class="rcpt-lbl">Order ID</span><span class="rcpt-val" id="rcptOrderId">—</span></div>
-        <div class="rcpt-row"><span class="rcpt-lbl">Payment Ref</span><span class="rcpt-val" id="rcptPayRef">—</span></div>
-        <div class="rcpt-row"><span class="rcpt-lbl">Name</span><span class="rcpt-val" id="rcptName">—</span></div>
-        <div class="rcpt-row"><span class="rcpt-lbl">Phone</span><span class="rcpt-val" id="rcptPhone">—</span></div>
-        <div class="rcpt-row"><span class="rcpt-lbl">Delivery</span><span class="rcpt-val" id="rcptType">—</span></div>
-        <div class="rcpt-row" id="rcptAddressRow"><span class="rcpt-lbl">Address</span><span class="rcpt-val" id="rcptAddress">—</span></div>
-        <div class="rcpt-items" id="rcptItems"></div>
-        <div class="rcpt-total-row"><span>Total Paid</span><span id="rcptTotal">—</span></div>
+
+        <!-- Transaction section -->
+        <div class="rcpt-section-label">Transaction Details</div>
+        <div class="rcpt-row">
+          <span class="rcpt-lbl">Order ID</span>
+          <span class="rcpt-val mono" id="rcptOrderId">—</span>
+        </div>
+        <div class="rcpt-row">
+          <span class="rcpt-lbl">Payment Ref</span>
+          <span class="rcpt-val mono" id="rcptPayRef">—</span>
+        </div>
+        <div class="rcpt-row">
+          <span class="rcpt-lbl">Method</span>
+          <span class="rcpt-val">Paystack</span>
+        </div>
+        <div class="rcpt-row">
+          <span class="rcpt-lbl">Status</span>
+          <span class="rcpt-val" style="color:#1a9e4a;">✔ Paid</span>
+        </div>
+
+        <!-- Customer section -->
+        <div class="rcpt-section-label">Customer Information</div>
+        <div class="rcpt-row">
+          <span class="rcpt-lbl">Name</span>
+          <span class="rcpt-val" id="rcptName">—</span>
+        </div>
+        <div class="rcpt-row">
+          <span class="rcpt-lbl">Phone</span>
+          <span class="rcpt-val" id="rcptPhone">—</span>
+        </div>
+        <div class="rcpt-row">
+          <span class="rcpt-lbl">Order Type</span>
+          <span class="rcpt-val" id="rcptType">—</span>
+        </div>
+        <div class="rcpt-row" id="rcptAddressRow">
+          <span class="rcpt-lbl">Address</span>
+          <span class="rcpt-val" id="rcptAddress">—</span>
+        </div>
+
+        <!-- Items section -->
+        <div class="rcpt-section-label">Items Ordered</div>
+        <div class="rcpt-items-block" id="rcptItems"></div>
+
       </div>
+
+      <!-- Total bar -->
+      <div class="rcpt-total-bar">
+        <span class="rcpt-total-lbl">Total Paid</span>
+        <span class="rcpt-total-amt" id="rcptTotal">—</span>
+      </div>
+
+      <!-- Tear perforation -->
+      <div class="rcpt-tear"></div>
+
+      <!-- Footer -->
+      <div class="rcpt-footer">
+        <p>Thank you for your order at Obudu Place.</p>
+        <p>Keep this receipt as proof of purchase.</p>
+        <div class="rcpt-verified">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#1a9e4a"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Verified via Paystack
+        </div>
+      </div>
+
+      <!-- Actions -->
       <div class="rcpt-actions">
         <button class="rcpt-wa-btn" onclick="sendReceiptToWhatsApp()">
           <svg width="18" height="18" viewBox="0 0 32 32" fill="#fff"><path d="M16 .5C7.44.5.5 7.44.5 16c0 2.72.7 5.3 2.02 7.6L.5 31.5l8.1-2.02A15.44 15.44 0 0016 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm7.28 18.36c-.4-.2-2.35-1.16-2.71-1.29-.37-.13-.63-.2-.9.2-.27.4-1.03 1.29-1.27 1.56-.23.27-.46.3-.86.1-.4-.2-1.68-.62-3.2-1.98-1.18-1.05-1.98-2.35-2.21-2.75-.23-.4-.02-.62.17-.82.18-.18.4-.46.6-.7.2-.23.27-.4.4-.66.13-.27.07-.5-.03-.7-.1-.2-.9-2.17-1.23-2.97-.32-.78-.65-.67-.9-.68h-.77c-.27 0-.7.1-1.07.5-.36.4-1.4 1.37-1.4 3.33s1.43 3.86 1.63 4.13c.2.27 2.82 4.3 6.83 6.03.96.41 1.7.66 2.28.85.96.3 1.83.26 2.52.16.77-.12 2.35-.96 2.68-1.89.33-.93.33-1.73.23-1.89-.1-.17-.36-.27-.76-.47z"/></svg>
-          Download Receipt &amp; Open WhatsApp
+          Download Receipt &amp; Send on WhatsApp
         </button>
-        <div style="background:#fffbea;border:1px solid #f0d060;border-radius:6px;padding:10px 13px;font-size:12px;color:#7a6000;line-height:1.6;">
-          <strong>How to send:</strong><br>
-          1. Tap the button above &mdash; your receipt image will download.<br>
-          2. WhatsApp will open. Tap the <strong>attachment (&#128206;)</strong> icon.<br>
-          3. Choose <strong>Gallery / Photos</strong> and select the downloaded receipt.<br>
-          <em>No internet for Gallery? Take a screenshot of this receipt instead and attach that.</em>
+        <div style="background:#f5f9ff;border:1px solid #c8daf5;border-radius:8px;padding:10px 13px;font-size:12px;color:#3a5a8a;line-height:1.7;">
+          <strong>📎 How to attach your receipt on WhatsApp:</strong><br>
+          1. Tap above — receipt image will download automatically.<br>
+          2. WhatsApp opens. Tap the <strong>📎 attachment</strong> icon.<br>
+          3. Choose <strong>Gallery / Photos</strong> and select the receipt.<br>
+          <em>Can't find it? Take a screenshot of this receipt instead.</em>
         </div>
-        <button class="rcpt-close-btn" onclick="closeReceipt()">Close &amp; Continue Ordering</button>
+        <button class="rcpt-close-btn" onclick="closeReceipt()">✕ Close &amp; Continue Ordering</button>
       </div>
+
     </div>
   </div>
 
@@ -883,6 +1103,13 @@
     document.getElementById('rcptName').textContent    = order.customerName;
     document.getElementById('rcptPhone').textContent   = order.phone;
     document.getElementById('rcptType').textContent    = order.orderType;
+
+    // Date / time stamp
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-NG', { day:'2-digit', month:'short', year:'numeric' });
+    const timeStr = now.toLocaleTimeString('en-NG', { hour:'2-digit', minute:'2-digit', hour12:true });
+    document.getElementById('rcptDateTime').textContent = dateStr + ' • ' + timeStr;
+
     const addrRow = document.getElementById('rcptAddressRow');
     if (order.address && order.address !== 'N/A') {
       document.getElementById('rcptAddress').textContent = order.address;
@@ -890,9 +1117,17 @@
     } else {
       addrRow.style.display = 'none';
     }
+
     document.getElementById('rcptItems').innerHTML = order.items.map(i =>
-      `<div class="rcpt-item-line"><span>${i.name} x${i.qty}</span><span>₦${(i.price * i.qty).toLocaleString()}</span></div>`
+      `<div class="rcpt-item-line">
+        <div>
+          <div class="rcpt-item-name">${i.name}</div>
+          <div class="rcpt-item-qty">Qty: ${i.qty}</div>
+        </div>
+        <div class="rcpt-item-price">₦${(i.price * i.qty).toLocaleString()}</div>
+      </div>`
     ).join('');
+
     document.getElementById('rcptTotal').textContent = '₦' + order.total.toLocaleString();
     document.getElementById('receiptBackdrop').classList.add('open');
     lockBodyScroll();
@@ -992,6 +1227,27 @@
     // Clean the URL immediately
     window.history.replaceState({}, '', window.location.pathname);
 
+    // Show the "please wait" processing modal immediately
+    function showProcessing() {
+      document.getElementById('processingBackdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function setStep(n) {
+      [1,2,3].forEach(i => {
+        const el = document.getElementById('procStep' + i);
+        if (i < n)       { el.className = 'proc-step done';   el.querySelector('.proc-step-icon').textContent = '✅'; }
+        else if (i === n){ el.className = 'proc-step active'; }
+        else             { el.className = 'proc-step'; }
+      });
+    }
+    function hideProcessing() {
+      document.getElementById('processingBackdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    showProcessing();
+    setStep(1);
+
     // Restore saved order data
     // Try localStorage first, then fall back to URL-encoded order data
     let snapshot = null;
@@ -1007,9 +1263,6 @@
         }
       } catch(e) { console.warn('Could not decode order from URL:', e.message); }
     }
-
-    // Show a visible processing banner
-    showAlert('⏳ Payment received — saving your order…');
 
     // Verify payment with Vercel (best-effort — never blocks)
     let paymentConfirmed = true;
@@ -1029,9 +1282,12 @@
     }
 
     if (!paymentConfirmed) {
+      hideProcessing();
       showAlert('⚠️ Payment was not successful. You have NOT been charged. Please try again.');
       return;
     }
+
+    setStep(2);
 
     // Use saved snapshot or fall back to minimal record
     if (!snapshot) {
@@ -1050,9 +1306,10 @@
       orderId = docId;
     } catch(e) {
       // Firestore failed — still show receipt, admin can check Paystack dashboard
-      showAlert('⚠️ Order saved locally. Ref: ' + reference + '. Please send receipt to admin.');
       console.error('Firestore error:', e.message);
     }
+
+    setStep(3);
 
     // Clear cart and form
     cart = []; updateCart();
@@ -1060,9 +1317,10 @@
       const el = document.getElementById(id); if (el) el.value = '';
     });
 
-    // Hide the processing banner
-    const alertEl = document.getElementById('payAlert');
-    if (alertEl) alertEl.style.display = 'none';
+    // Brief pause so user sees "Generating receipt" step before modal swaps
+    await new Promise(r => setTimeout(r, 600));
+
+    hideProcessing();
 
     // Show receipt
     showReceipt({ ...orderData, orderId });
