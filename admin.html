@@ -901,7 +901,7 @@
           <span class="s-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span> Orders
         </div>
         <div class="s-item" data-panel="menu">
-          <span class="s-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span> Products
+          <span class="s-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span> Menu
         </div>
         <div class="s-item" data-panel="revenue">
           <span class="s-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Revenue
@@ -937,7 +937,7 @@
       <div class="panel active" id="panel-overview">
         <div class="page-header">
           <h1 class="panel-title">Overview</h1>
-          <p class="panel-sub">Live snapshot of your store</p>
+          <p class="panel-sub">Live snapshot of your restaurant</p>
         </div>
         <div class="stats-grid">
           <div class="stat-card is-loading">
@@ -970,7 +970,7 @@
           <div class="stat-card is-loading">
             <div class="stat-card-accent"></div>
             <div class="stat-top">
-              <div class="stat-lbl">Products</div>
+              <div class="stat-lbl">Menu Items</div>
               <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
             </div>
             <div class="stat-val" id="st-menu">—</div>
@@ -1123,11 +1123,11 @@
           <canvas id="chartRevMonthly" height="180"></canvas>
         </div>
 
-        <!-- Top Products & Monthly Breakdown -->
+        <!-- Top Menu Items & Monthly Breakdown -->
         <div class="rev-grid-2">
-          <!-- Top Products by Revenue -->
+          <!-- Top Menu Items by Revenue -->
           <div class="rev-card">
-            <div class="rev-section-title">Top Products by Revenue <span>All time</span></div>
+            <div class="rev-section-title">Top Menu Items by Revenue <span>All time</span></div>
             <div class="top-prod-list" id="revTopProds">
               <div class="no-rev-data">No data yet</div>
             </div>
@@ -1195,11 +1195,11 @@
       <!-- PRODUCTS PANEL -->
       <div class="panel" id="panel-menu">
         <div class="page-header">
-          <h1 class="panel-title">Products</h1>
-          <p class="panel-sub">Add, edit and manage your jewellery collection</p>
+          <h1 class="panel-title">Menu</h1>
+          <p class="panel-sub">Add, edit and manage your menu items</p>
         </div>
         <div class="menu-toprow">
-          <button class="add-btn-main" id="addProductBtn">+ Add Product</button>
+          <button class="add-btn-main" id="addProductBtn">+ Add Menu Item</button>
         </div>
         <div class="menu-cards" id="menuCards">
           <div class="m-card-skel"><div class="skel skel-img"></div><div class="m-body"><div class="skel skel-text" style="width:40%"></div><div class="skel skel-line" style="width:80%"></div><div class="skel skel-line" style="width:50%;height:18px;margin-top:10px"></div></div></div>
@@ -1235,7 +1235,7 @@
     <nav class="bottom-nav">
       <button class="bnav-item active" data-panel="overview"><span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span>Overview</button>
       <button class="bnav-item" data-panel="orders"><span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span>Orders</button>
-      <button class="bnav-item" data-panel="menu"><span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>Products</button>
+      <button class="bnav-item" data-panel="menu"><span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>Menu</button>
       <button class="bnav-item" data-panel="revenue"><span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Revenue</button>
       <button class="bnav-item" data-panel="messages"><span class="icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Messages</button>
     </nav>
@@ -1245,11 +1245,11 @@
   <!-- PRODUCT MODAL -->
   <div class="modal-bg" id="menuModal">
     <div class="modal">
-      <h3 id="modalTitle">Add Product</h3>
+      <h3 id="modalTitle">Add Menu Item</h3>
       <div class="m-grid">
-        <input class="full" type="text" id="mName" placeholder="Product Name *">
+        <input class="full" type="text" id="mName" placeholder="Item Name *">
         <input type="number" id="mPrice" placeholder="Price (₦) *" min="0">
-        <input type="text" id="mCategory" placeholder="Category (e.g. Necklaces)">
+        <input type="text" id="mCategory" placeholder="Category (e.g. Soups, Grills, Drinks)">
         <textarea class="full" id="mDesc" placeholder="Description (optional)"></textarea>
         <div class="img-upload-wrap">
           <div style="font-size:11px;color:var(--mid);margin-bottom:8px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;">Photos (max 3 — first = main thumbnail)</div>
@@ -1285,7 +1285,7 @@
       </div>
       <div class="modal-foot">
         <button class="m-cancel" id="modalCancelBtn">Cancel</button>
-        <button class="m-save" id="modalSaveBtn">Save Product</button>
+        <button class="m-save" id="modalSaveBtn">Save Item</button>
       </div>
     </div>
   </div>
@@ -1333,11 +1333,11 @@
     </div>
   </div>
 
-  <!-- CONFIRM MODAL (product delete) -->
+  <!-- CONFIRM MODAL (item delete) -->
   <div class="confirm-modal-bg" id="confirmModal">
     <div class="confirm-modal">
       <div class="ci"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-      <h3>Delete Product?</h3>
+      <h3>Delete Menu Item?</h3>
       <p id="confirmMsg">This action cannot be undone.</p>
       <div class="confirm-foot">
         <button class="cf-cancel" id="cfCancelBtn">Cancel</button>
@@ -1592,7 +1592,7 @@
           if (change.type === 'added') {
             const o = { id: change.doc.id, ...change.doc.data() };
             playNotifSound();
-            showBrowserNotif('New Order \u2014 Gift\'s Crafts', `${o.customerName} \u00b7 \u20a6${Number(o.total).toLocaleString()}`);
+            showBrowserNotif('New Order \u2014 Obudu Place', `${o.customerName} \u00b7 \u20a6${Number(o.total).toLocaleString()}`);
             showOrderToast(o);
           }
         });
@@ -1632,7 +1632,7 @@
         },
         err => {
           console.error('Menu listener error:', err);
-          showAlert('Failed to load products. Check your connection.', 'error');
+          showAlert('Failed to load menu. Check your connection.', 'error');
           menuLoaded = true;
           maybeHideConnBar();
         }
@@ -1799,7 +1799,7 @@
     document.getElementById('delConfirmBtn').addEventListener('click', confirmDeleteOrder);
     document.getElementById('delPassword').addEventListener('keydown', e => { if (e.key === 'Enter') confirmDeleteOrder(); });
 
-    /* ── CONFIRM MODAL (product delete) ── */
+    /* ── CONFIRM MODAL (item delete) ── */
     function openConfirm(msg, cb) {
       document.getElementById('confirmMsg').textContent = msg;
       confirmCb = cb;
@@ -1825,7 +1825,7 @@
     function renderMenuCards() {
       const wrap = document.getElementById('menuCards');
       if (!allMenu.length) {
-        wrap.innerHTML = '<div class="no-data">No products yet. Add your first item above.</div>';
+        wrap.innerHTML = '<div class="no-data">No menu items yet. Add your first item above.</div>';
         return;
       }
       wrap.innerHTML = allMenu.map((item, idx) => `
@@ -1863,10 +1863,10 @@
           openConfirm(`Delete "${btn.dataset.delProdName}"? This cannot be undone.`, async () => {
             try {
               await withRetry(() => deleteDoc(doc(db, 'menu', btn.dataset.delProd)));
-              showAlert('Product deleted.', 'info');
+              showAlert('Item deleted.', 'info');
             } catch(e) {
-              console.error('Delete product error:', e);
-              showAlert('Failed to delete product. Please try again.', 'error');
+              console.error('Delete item error:', e);
+              showAlert('Failed to delete item. Please try again.', 'error');
             }
           });
         });
@@ -1950,7 +1950,7 @@
     /* ── PRODUCT MODAL ── */
     function openModal(id) {
       editId = id || null;
-      document.getElementById('modalTitle').textContent = id ? 'Edit Product' : 'Add Product';
+      document.getElementById('modalTitle').textContent = id ? 'Edit Menu Item' : 'Add Menu Item';
       const item = id ? allMenu.find(i => i.id === id) : null;
       document.getElementById('mName').value     = item?.name        || '';
       document.getElementById('mPrice').value    = item?.price       || '';
@@ -1973,8 +1973,8 @@
       const available = document.getElementById('mAvail').checked;
       const btn       = document.getElementById('modalSaveBtn');
 
-      if (!name)     { showAlert('Product name is required.', 'error'); return; }
-      if (!priceRaw) { showAlert('Product price is required.', 'error'); return; }
+      if (!name)     { showAlert('Item name is required.', 'error'); return; }
+      if (!priceRaw) { showAlert('Item price is required.', 'error'); return; }
       const price = Number(priceRaw);
       if (isNaN(price) || price < 0) { showAlert('Enter a valid price.', 'error'); return; }
 
@@ -1985,17 +1985,17 @@
       try {
         if (editId) {
           await withRetry(() => updateDoc(doc(db, 'menu', editId), data));
-          showAlert('Product updated.', 'success');
+          showAlert('Item updated.', 'success');
         } else {
           await withRetry(() => addDoc(collection(db, 'menu'), { ...data, createdAt: serverTimestamp() }));
-          showAlert('Product added.', 'success');
+          showAlert('Item added.', 'success');
         }
         closeModal();
       } catch(e) {
-        console.error('Save product error:', e);
+        console.error('Save item error:', e);
         showAlert('Failed to save. Check your internet and try again.', 'error');
       } finally {
-        btn.textContent = 'Save Product';
+        btn.textContent = 'Save Item';
         btn.disabled    = false;
       }
     }
@@ -2180,7 +2180,7 @@
         monthBarsEl.innerHTML = '<div class="no-rev-data">No completed orders yet</div>';
       }
 
-      // ── Top products ──
+      // ── Top menu items ──
       const prodMap = {};
       done.forEach(o => {
         if (!o.items) return;
