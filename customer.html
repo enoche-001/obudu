@@ -337,123 +337,129 @@
     /* ── RECEIPT MODAL (bank-style) ── */
     .receipt-backdrop {
       display:none; position:fixed; inset:0; z-index:400;
-      background:rgba(0,0,0,0.60); backdrop-filter:blur(4px);
-      align-items:center; justify-content:center; padding:16px;
+      background:rgba(0,0,0,0.65); backdrop-filter:blur(4px);
+      align-items:flex-end; justify-content:center; padding:0;
     }
     .receipt-backdrop.open { display:flex; }
     .receipt-box {
-      background:#fff; border-radius:0; width:min(400px,100%);
-      max-height:94vh; overflow-y:auto;
-      box-shadow:0 24px 60px rgba(0,0,0,0.3);
-      animation:rcpt-in 0.35s cubic-bezier(0.34,1.56,0.64,1);
-      font-family:'Jost',sans-serif;
+      background:#fff; border-radius:16px 16px 0 0; width:min(440px,100%);
+      max-height:92vh; display:flex; flex-direction:column;
+      box-shadow:0 -8px 40px rgba(0,0,0,0.25);
+      animation:rcpt-in 0.32s cubic-bezier(0.34,1.4,0.64,1);
+      font-family:'Jost',sans-serif; overflow:hidden;
     }
-    @keyframes rcpt-in { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes rcpt-in { from{opacity:0;transform:translateY(60px)} to{opacity:1;transform:translateY(0)} }
 
-    /* Receipt Header */
+    /* Drag handle */
+    .rcpt-handle {
+      width:36px; height:4px; background:#D8D2C8; border-radius:2px;
+      margin:10px auto 0; flex-shrink:0;
+    }
+
+    /* Scrollable middle */
+    .rcpt-scroll { overflow-y:auto; flex:1; min-height:0; }
+
+    /* Receipt Header — compact */
     .rcpt-head {
       background:var(--accent); color:#fff;
-      padding:0; text-align:center; position:relative;
-    }
-    .rcpt-head-logo {
-      padding:20px 24px 14px;
-      border-bottom:1px solid rgba(255,255,255,0.18);
+      padding:12px 18px 10px; text-align:center;
     }
     .rcpt-head-logo h2 {
       font-family:'Cormorant Garamond',serif;
-      font-size:22px; font-weight:700; letter-spacing:0.5px; margin:0 0 2px;
+      font-size:17px; font-weight:700; letter-spacing:0.4px; margin:0 0 1px;
     }
     .rcpt-head-logo p {
-      font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
-      opacity:0.75; margin:0;
-    }
-    .rcpt-head-status {
-      padding:14px 24px 18px;
+      font-size:9px; letter-spacing:1.5px; text-transform:uppercase;
+      opacity:0.75; margin:0 0 8px;
     }
     .rcpt-status-badge {
-      display:inline-flex; align-items:center; gap:7px;
+      display:inline-flex; align-items:center; gap:6px;
       background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3);
-      border-radius:100px; padding:6px 16px; font-size:12px;
+      border-radius:100px; padding:4px 12px; font-size:11px;
       font-weight:700; letter-spacing:0.5px; text-transform:uppercase;
-      margin-bottom:6px;
     }
-    .rcpt-status-dot { width:7px; height:7px; border-radius:50%; background:#4ade80; }
-    .rcpt-head-status p { font-size:11px; opacity:0.8; margin:0; }
+    .rcpt-status-dot { width:6px; height:6px; border-radius:50%; background:#4ade80; flex-shrink:0; }
+    .rcpt-head-status { padding:6px 0 0; }
+    .rcpt-head-status p { font-size:10px; opacity:0.75; margin:4px 0 0; }
 
-    /* Receipt Section Divider */
+    /* Section labels */
     .rcpt-section-label {
-      font-size:9px; letter-spacing:2px; text-transform:uppercase;
-      color:#9A9288; padding:12px 20px 6px; font-weight:700;
-      border-top:1px solid #f0ebe4;
+      font-size:8.5px; letter-spacing:1.8px; text-transform:uppercase;
+      color:#9A9288; padding:8px 16px 4px; font-weight:700;
+      border-top:1px solid #f0ebe4; background:#faf8f5;
     }
     .rcpt-section-label:first-child { border-top:none; }
 
-    /* Receipt Rows */
+    /* Rows */
     .rcpt-body { padding:0; }
     .rcpt-row {
-      display:flex; justify-content:space-between; align-items:flex-start;
-      padding:9px 20px; border-bottom:1px solid #f5f2ee;
-      font-size:13px; gap:12px;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:7px 16px; border-bottom:1px solid #f5f2ee;
+      font-size:12.5px; gap:10px;
     }
     .rcpt-row:last-child { border-bottom:none; }
-    .rcpt-lbl { color:#9A9288; font-weight:500; flex-shrink:0; font-size:12px; padding-top:1px; }
-    .rcpt-val { color:#1A1612; font-weight:600; text-align:right; word-break:break-all; font-size:13px; }
-    .rcpt-val.mono { font-family:monospace; font-size:12px; letter-spacing:0.5px; }
+    .rcpt-lbl { color:#9A9288; font-weight:500; flex-shrink:0; font-size:11.5px; }
+    .rcpt-val { color:#1A1612; font-weight:600; text-align:right; word-break:break-word; font-size:12.5px; }
+    .rcpt-val.mono { font-family:monospace; font-size:11px; letter-spacing:0.3px; }
 
     /* Items block */
-    .rcpt-items-block { padding:0 20px 4px; }
+    .rcpt-items-block { padding:0 16px 4px; }
     .rcpt-item-line {
       display:flex; justify-content:space-between; align-items:center;
-      padding:7px 0; border-bottom:1px dashed #f0ebe4; font-size:13px;
+      padding:5px 0; border-bottom:1px dashed #f0ebe4; font-size:12px;
     }
     .rcpt-item-line:last-child { border-bottom:none; }
     .rcpt-item-name { color:#1A1612; font-weight:500; }
-    .rcpt-item-qty { color:#9A9288; font-size:11px; }
+    .rcpt-item-qty { color:#9A9288; font-size:10.5px; margin-left:4px; }
     .rcpt-item-price { color:#1A1612; font-weight:700; }
 
     /* Total bar */
     .rcpt-total-bar {
       display:flex; justify-content:space-between; align-items:center;
       background:var(--charcoal); color:#fff;
-      padding:14px 20px; margin:0;
+      padding:10px 16px;
     }
-    .rcpt-total-bar .rcpt-total-lbl { font-size:12px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; opacity:0.75; }
-    .rcpt-total-bar .rcpt-total-amt { font-size:22px; font-weight:800; font-family:'Jost',sans-serif; }
-
-    /* Footer */
-    .rcpt-footer {
-      padding:12px 20px; background:#faf8f5;
-      border-top:1px solid #f0ebe4; text-align:center;
-    }
-    .rcpt-footer p { font-size:10px; color:#9A9288; margin:0 0 2px; line-height:1.5; }
-    .rcpt-footer .rcpt-verified {
-      display:inline-flex; align-items:center; gap:5px;
-      font-size:10px; color:#1a9e4a; font-weight:700; margin-top:6px;
-    }
+    .rcpt-total-bar .rcpt-total-lbl { font-size:11px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; opacity:0.75; }
+    .rcpt-total-bar .rcpt-total-amt { font-size:20px; font-weight:800; }
 
     /* Perforated tear line */
     .rcpt-tear {
-      height:12px; background:
-        radial-gradient(circle at 0 50%, #fff 6px, transparent 6px),
-        radial-gradient(circle at 100% 50%, #fff 6px, transparent 6px);
+      height:10px; background:
+        radial-gradient(circle at 0 50%, #fff 5px, transparent 5px),
+        radial-gradient(circle at 100% 50%, #fff 5px, transparent 5px);
       background-repeat:repeat-x;
-      background-size:16px 12px;
-      background-color:#f0ebe4;
+      background-size:14px 10px;
+      background-color:#e8e2da;
+      flex-shrink:0;
     }
 
-    /* Actions */
-    .rcpt-actions { padding:16px 20px 20px; display:flex; flex-direction:column; gap:10px; background:#fff; }
+    /* Verified line inside scroll area */
+    .rcpt-verified-line {
+      display:flex; align-items:center; justify-content:center; gap:5px;
+      font-size:9.5px; color:#1a9e4a; font-weight:700;
+      padding:6px 16px 8px; background:#faf8f5;
+    }
+
+    /* Sticky action bar — always visible */
+    .rcpt-actions {
+      padding:10px 16px 14px; display:flex; flex-direction:column; gap:8px;
+      background:#fff; border-top:1px solid #f0ebe4; flex-shrink:0;
+    }
     .rcpt-wa-btn {
       background:#25D366; color:#fff; border:none;
-      padding:14px; border-radius:8px; font-family:'Jost',sans-serif;
+      padding:13px; border-radius:10px; font-family:'Jost',sans-serif;
       font-size:14px; font-weight:700; cursor:pointer;
       display:flex; align-items:center; justify-content:center; gap:8px;
       transition:background 0.2s; letter-spacing:0.3px;
     }
     .rcpt-wa-btn:hover { background:#1ebe5d; }
+    .rcpt-wa-hint {
+      font-size:11px; color:#7a8fa6; text-align:center; line-height:1.5;
+      padding:0 4px;
+    }
     .rcpt-close-btn {
       background:#fff; color:#5A5248; border:1.5px solid #D8D2C8;
-      padding:12px; border-radius:8px; font-family:'Jost',sans-serif;
+      padding:10px; border-radius:10px; font-family:'Jost',sans-serif;
       font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;
       text-align:center;
     }
@@ -598,103 +604,97 @@
     </div>
   </div>
 
-  <!-- RECEIPT MODAL (Bank-style) -->
+  <!-- RECEIPT MODAL -->
   <div class="receipt-backdrop" id="receiptBackdrop">
     <div class="receipt-box">
 
-      <!-- Header: Business identity -->
-      <div class="rcpt-head">
-        <div class="rcpt-head-logo">
-          <h2>Obudu Place</h2>
-          <p>Official Payment Receipt</p>
-        </div>
-        <div class="rcpt-head-status">
-          <div class="rcpt-status-badge">
-            <span class="rcpt-status-dot"></span>
-            Payment Confirmed
+      <!-- Drag handle -->
+      <div class="rcpt-handle"></div>
+
+      <!-- Scrollable receipt content -->
+      <div class="rcpt-scroll">
+
+        <!-- Header -->
+        <div class="rcpt-head">
+          <div class="rcpt-head-logo">
+            <h2>Obudu Place</h2>
+            <p>Official Payment Receipt</p>
           </div>
-          <p id="rcptDateTime">—</p>
-        </div>
-      </div>
-
-      <div class="rcpt-body">
-
-        <!-- Transaction section -->
-        <div class="rcpt-section-label">Transaction Details</div>
-        <div class="rcpt-row">
-          <span class="rcpt-lbl">Order ID</span>
-          <span class="rcpt-val mono" id="rcptOrderId">—</span>
-        </div>
-        <div class="rcpt-row">
-          <span class="rcpt-lbl">Payment Ref</span>
-          <span class="rcpt-val mono" id="rcptPayRef">—</span>
-        </div>
-        <div class="rcpt-row">
-          <span class="rcpt-lbl">Method</span>
-          <span class="rcpt-val">Paystack</span>
-        </div>
-        <div class="rcpt-row">
-          <span class="rcpt-lbl">Status</span>
-          <span class="rcpt-val" style="color:#1a9e4a;">✔ Paid</span>
+          <div class="rcpt-head-status">
+            <div class="rcpt-status-badge">
+              <span class="rcpt-status-dot"></span>
+              Payment Confirmed
+            </div>
+            <p id="rcptDateTime">—</p>
+          </div>
         </div>
 
-        <!-- Customer section -->
-        <div class="rcpt-section-label">Customer Information</div>
-        <div class="rcpt-row">
-          <span class="rcpt-lbl">Name</span>
-          <span class="rcpt-val" id="rcptName">—</span>
+        <div class="rcpt-body">
+
+          <!-- Transaction -->
+          <div class="rcpt-section-label">Transaction</div>
+          <div class="rcpt-row">
+            <span class="rcpt-lbl">Order ID</span>
+            <span class="rcpt-val mono" id="rcptOrderId">—</span>
+          </div>
+          <div class="rcpt-row">
+            <span class="rcpt-lbl">Ref</span>
+            <span class="rcpt-val mono" id="rcptPayRef">—</span>
+          </div>
+          <div class="rcpt-row">
+            <span class="rcpt-lbl">Status</span>
+            <span class="rcpt-val" style="color:#1a9e4a;">✔ Paid · Paystack</span>
+          </div>
+
+          <!-- Customer -->
+          <div class="rcpt-section-label">Customer</div>
+          <div class="rcpt-row">
+            <span class="rcpt-lbl">Name</span>
+            <span class="rcpt-val" id="rcptName">—</span>
+          </div>
+          <div class="rcpt-row">
+            <span class="rcpt-lbl">Phone</span>
+            <span class="rcpt-val" id="rcptPhone">—</span>
+          </div>
+          <div class="rcpt-row">
+            <span class="rcpt-lbl">Type</span>
+            <span class="rcpt-val" id="rcptType">—</span>
+          </div>
+          <div class="rcpt-row" id="rcptAddressRow">
+            <span class="rcpt-lbl">Address</span>
+            <span class="rcpt-val" id="rcptAddress">—</span>
+          </div>
+
+          <!-- Items -->
+          <div class="rcpt-section-label">Items Ordered</div>
+          <div class="rcpt-items-block" id="rcptItems"></div>
+
         </div>
-        <div class="rcpt-row">
-          <span class="rcpt-lbl">Phone</span>
-          <span class="rcpt-val" id="rcptPhone">—</span>
-        </div>
-        <div class="rcpt-row">
-          <span class="rcpt-lbl">Order Type</span>
-          <span class="rcpt-val" id="rcptType">—</span>
-        </div>
-        <div class="rcpt-row" id="rcptAddressRow">
-          <span class="rcpt-lbl">Address</span>
-          <span class="rcpt-val" id="rcptAddress">—</span>
+
+        <!-- Total bar -->
+        <div class="rcpt-total-bar">
+          <span class="rcpt-total-lbl">Total Paid</span>
+          <span class="rcpt-total-amt" id="rcptTotal">—</span>
         </div>
 
-        <!-- Items section -->
-        <div class="rcpt-section-label">Items Ordered</div>
-        <div class="rcpt-items-block" id="rcptItems"></div>
+        <!-- Tear line -->
+        <div class="rcpt-tear"></div>
 
-      </div>
-
-      <!-- Total bar -->
-      <div class="rcpt-total-bar">
-        <span class="rcpt-total-lbl">Total Paid</span>
-        <span class="rcpt-total-amt" id="rcptTotal">—</span>
-      </div>
-
-      <!-- Tear perforation -->
-      <div class="rcpt-tear"></div>
-
-      <!-- Footer -->
-      <div class="rcpt-footer">
-        <p>Thank you for your order at Obudu Place.</p>
-        <p>Keep this receipt as proof of purchase.</p>
-        <div class="rcpt-verified">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="#1a9e4a"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          Verified via Paystack
+        <!-- Verified -->
+        <div class="rcpt-verified-line">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="#1a9e4a"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Verified via Paystack · Keep as proof of purchase
         </div>
-      </div>
 
-      <!-- Actions -->
+      </div><!-- /rcpt-scroll -->
+
+      <!-- Sticky action bar — always visible -->
       <div class="rcpt-actions">
         <button class="rcpt-wa-btn" onclick="sendReceiptToWhatsApp()">
           <svg width="18" height="18" viewBox="0 0 32 32" fill="#fff"><path d="M16 .5C7.44.5.5 7.44.5 16c0 2.72.7 5.3 2.02 7.6L.5 31.5l8.1-2.02A15.44 15.44 0 0016 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm7.28 18.36c-.4-.2-2.35-1.16-2.71-1.29-.37-.13-.63-.2-.9.2-.27.4-1.03 1.29-1.27 1.56-.23.27-.46.3-.86.1-.4-.2-1.68-.62-3.2-1.98-1.18-1.05-1.98-2.35-2.21-2.75-.23-.4-.02-.62.17-.82.18-.18.4-.46.6-.7.2-.23.27-.4.4-.66.13-.27.07-.5-.03-.7-.1-.2-.9-2.17-1.23-2.97-.32-.78-.65-.67-.9-.68h-.77c-.27 0-.7.1-1.07.5-.36.4-1.4 1.37-1.4 3.33s1.43 3.86 1.63 4.13c.2.27 2.82 4.3 6.83 6.03.96.41 1.7.66 2.28.85.96.3 1.83.26 2.52.16.77-.12 2.35-.96 2.68-1.89.33-.93.33-1.73.23-1.89-.1-.17-.36-.27-.76-.47z"/></svg>
-          Download Receipt &amp; Send on WhatsApp
+          Send Receipt on WhatsApp
         </button>
-        <div style="background:#f5f9ff;border:1px solid #c8daf5;border-radius:8px;padding:10px 13px;font-size:12px;color:#3a5a8a;line-height:1.7;">
-          <strong>📎 How to attach your receipt on WhatsApp:</strong><br>
-          1. Tap above — receipt image will download automatically.<br>
-          2. WhatsApp opens. Tap the <strong>📎 attachment</strong> icon.<br>
-          3. Choose <strong>Gallery / Photos</strong> and select the receipt.<br>
-          <em>Can't find it? Take a screenshot of this receipt instead.</em>
-        </div>
+        <p class="rcpt-wa-hint">Receipt image downloads automatically · attach in WhatsApp</p>
         <button class="rcpt-close-btn" onclick="closeReceipt()">✕ Close &amp; Continue Ordering</button>
       </div>
 

@@ -6,8 +6,11 @@
   <title>Admin — Obudu Place</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com">
+  <link rel="preconnect" href="https://identitytoolkit.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
   <style>
     :root {
       /* Core palette */
@@ -1450,6 +1453,53 @@
     let confirmCb      = null;
     let listenersStarted = false;
     let adminPassword = ''; // set from login input on successful auth
+    let liveOrdersReceived = false; // becomes true only on the FIRST real Firestore snapshot
+
+    /* ── LOCAL CACHE (instant paint on slow networks) ──
+       Firestore listeners still give live data, but on the slow connections
+       Enoch's customers run on in Kogi, the first onSnapshot response can take
+       several seconds. We stash the last-known good data in localStorage and
+       paint it immediately on load, then let the live listener silently
+       replace it the moment fresh data arrives. */
+    const CACHE_PREFIX  = 'obuduAdminCache_';
+    const CACHE_VERSION = 1;
+    function cacheSave(key, data) {
+      try {
+        localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({ v: CACHE_VERSION, data }));
+      } catch (e) { /* storage full/disabled — just skip caching */ }
+    }
+    function cacheLoad(key) {
+      try {
+        const raw = localStorage.getItem(CACHE_PREFIX + key);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (parsed.v !== CACHE_VERSION || !Array.isArray(parsed.data)) return null;
+        return parsed.data;
+      } catch (e) { return null; }
+    }
+    // Paints the dashboard with whatever we cached last session, BEFORE the
+    // network round-trip to Firestore completes. The real listeners overwrite
+    // this within moments, so there's no staleness risk — just a faster first paint.
+    function hydrateFromCache() {
+      const cachedOrders = cacheLoad('orders');
+      if (cachedOrders && cachedOrders.length) {
+        allOrders = cachedOrders;
+        renderOrders();
+      }
+      const cachedMenu = cacheLoad('menu');
+      if (cachedMenu && cachedMenu.length) {
+        allMenu = cachedMenu;
+        renderMenuCards();
+      }
+      const cachedMessages = cacheLoad('messages');
+      if (cachedMessages && cachedMessages.length) {
+        allMessages = cachedMessages;
+        renderMessages();
+      }
+      if ((cachedOrders && cachedOrders.length) || (cachedMenu && cachedMenu.length)) {
+        updateStats();
+      }
+    }
 
     /* ── ALERT TOAST ── */
     let alertTimer = null;
@@ -1472,6 +1522,7 @@
         if (!listenersStarted) {
           listenersStarted = true;
           document.getElementById('connBar').classList.add('active');
+          hydrateFromCache();
           startListeners();
         }
       } else {
@@ -1587,7 +1638,7 @@
         };
         return getMs(b.createdAt) - getMs(a.createdAt);
       });
-      if (allOrders.length > 0) {
+      if (liveOrdersReceived) {
         snap.docChanges().forEach(change => {
           if (change.type === 'added') {
             const o = { id: change.doc.id, ...change.doc.data() };
@@ -1597,11 +1648,13 @@
           }
         });
       }
+      liveOrdersReceived = true;
       allOrders = fresh;
       renderOrders();
       updateStats();
       ordersLoaded = true;
       maybeHideConnBar();
+      cacheSave('orders', fresh);
     }
 
     function startListeners() {
@@ -1629,6 +1682,7 @@
           updateStats();
           menuLoaded = true;
           maybeHideConnBar();
+          cacheSave('menu', allMenu);
         },
         err => {
           console.error('Menu listener error:', err);
@@ -2605,6 +2659,7 @@
             if (dot) dot.style.display = unreadCount > 0 ? 'inline-block' : 'none';
             allMessages = fresh;
             renderMessages();
+            cacheSave('messages', fresh);
           } catch(e) {
             showAlert('Something went wrong loading messages. Please refresh the page.', 'error');
           }
@@ -2619,6 +2674,13 @@
       );
     }
 
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>

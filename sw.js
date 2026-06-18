@@ -1,10 +1,11 @@
-const CACHE = 'giftcrafts-v1';
+const CACHE = 'giftcrafts-v2';
 const SHELL = [
   '/',
   '/index.html',
   '/customer.html',
   '/track.html',
-  '/linktree.html'
+  '/linktree.html',
+  '/admin.html'
 ];
 
 // Install: pre-cache shell
@@ -24,7 +25,7 @@ self.addEventListener('activate', e => {
 });
 
 // Fetch strategy:
-// - Fonts / ibb images: cache-first
+// - Fonts / ibb images / Chart.js (cdnjs): cache-first
 // - Firestore / Firebase: network-first (no cache)
 // - Everything else: stale-while-revalidate
 self.addEventListener('fetch', e => {
@@ -38,8 +39,8 @@ self.addEventListener('fetch', e => {
     return; // fall through to browser default
   }
 
-  // Fonts & external images — cache-first
-  if (url.hostname.includes('fonts.g') || url.hostname.includes('i.ibb.co')) {
+  // Fonts, external images & Chart.js (cdnjs) — cache-first
+  if (url.hostname.includes('fonts.g') || url.hostname.includes('i.ibb.co') || url.hostname.includes('cdnjs.cloudflare.com')) {
     e.respondWith(
       caches.match(e.request).then(cached => {
         if (cached) return cached;
