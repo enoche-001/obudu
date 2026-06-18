@@ -269,8 +269,8 @@
     .order-btn { background:var(--accent); color:#fff; border:none; padding:14px; border-radius:5px; font-family:'Jost',sans-serif; font-size:14px; font-weight:700; cursor:pointer; transition:background 0.2s; margin-top:4px; letter-spacing:0.3px; }
     .order-btn:hover { background:var(--purple2); }
     .order-btn:disabled { opacity:0.6; cursor:not-allowed; }
-    .checkout-btn { background:#6C4AE6; color:#fff; border:none; padding:16px; border-radius:14px; font-family:'Jost',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:background 0.2s, transform 0.15s; letter-spacing:0.3px; }
-    .checkout-btn:hover { background:#5a3bd1; }
+    .checkout-btn { background:var(--accent); color:#fff; border:none; padding:16px; border-radius:14px; font-family:'Jost',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:background 0.2s, transform 0.15s; letter-spacing:0.3px; }
+    .checkout-btn:hover { background:var(--purple2); }
     .checkout-btn:active { transform:scale(0.98); }
     .checkout-btn:disabled { opacity:0.6; cursor:not-allowed; }
 
@@ -410,7 +410,7 @@
   <div class="overlay" id="overlay" onclick="closeCart()"></div>
   <div class="drawer" id="drawer">
     <div class="drawer-head">
-      <h3>Your Cart &#127873;</h3>
+      <h3>Your Cart &#127869;</h3>
       <button class="close-btn" onclick="closeCart()">&times;</button>
     </div>
     <div class="drawer-items" id="drawerItems">
@@ -700,7 +700,7 @@
             ? imgs.map((src, si) => `<img class="mc-slide${si === 0 ? ' mc-slide-active' : ''}" src="${src}" alt="${item.name}" loading="lazy">`).join('')
             : thumb
               ? `<img class="mc-slide-solo" src="${thumb}" alt="${item.name}" loading="lazy">`
-              : `<div class="no-img">&#127873;</div>`}
+              : `<div class="no-img">&#127869;</div>`}
           ${disc ? `<span class="mc-disc-overlay">-${disc.pct}% OFF</span>` : ''}
           ${thumb ? `<span class="mc-tap-overlay">&#128065;&#65039; Tap to view</span>` : ''}
           ${imgs.length > 1 ? `<span class="mc-img-count">&#128247; ${imgs.length}</span>` : ''}
@@ -773,7 +773,7 @@
     if (!cart.length) { el.innerHTML = '<p class="cart-empty">Your cart is empty</p>'; return; }
     el.innerHTML = cart.map(i => `
       <div class="cart-item">
-        ${i.image ? `<img class="ci-thumb" src="${i.image}" alt="${i.name}" loading="lazy">` : `<div class="ci-thumb" style="display:flex;align-items:center;justify-content:center;font-size:24px;">&#127873;</div>`}
+        ${i.image ? `<img class="ci-thumb" src="${i.image}" alt="${i.name}" loading="lazy">` : `<div class="ci-thumb" style="display:flex;align-items:center;justify-content:center;font-size:24px;">&#127869;</div>`}
         <div class="ci-info">
           <div class="ci-top">
             <div class="ci-name">${i.name}</div>

@@ -260,6 +260,16 @@
 
     function stepIndex(s) { return s === 'Cancelled' ? -1 : steps.indexOf(s); }
 
+    // Phone numbers get saved exactly as the customer typed them at checkout
+    // (e.g. "08184372827", "+2348184372827", "234 818 437 2827"). An exact
+    // Firestore match on the raw string fails whenever the format differs
+    // even slightly. Normalizing to the last 10 digits makes any of those
+    // formats match the same number.
+    function normalizePhone(raw) {
+      const digits = String(raw || '').replace(/\D/g, '');
+      return digits.length > 10 ? digits.slice(-10) : digits;
+    }
+
     function buildProgress(status) {
       const cur = stepIndex(status), cancelled = status === 'Cancelled';
       const icons = ['\u23F0','\u2702\uFE0F','\u2705'];
@@ -341,21 +351,19 @@
 
       wrap.innerHTML = '<div class="state-msg"><span class="ico">\uD83D\uDD0D</span><p>Looking up your orders...</p></div>';
 
-      // Firestore REST structured query — filter by phone
+      const normalizedInput = normalizePhone(phone);
+
+      // We can't filter by a normalized phone in Firestore directly (phone
+      // is stored exactly as the customer typed it at checkout), so fetch
+      // recent orders and match the normalized last-10-digits client-side.
+      // This is reliable regardless of how the number was formatted at
+      // checkout vs. how it's typed here.
       const url = `https://firestore.googleapis.com/v1/projects/${PROJ}/databases/(default)/documents:runQuery?key=${APIKEY}`;
-      // No orderBy in query — Firestore needs a composite index for where+orderBy
-      // on different fields. Sort client-side after fetch instead.
       const body = {
         structuredQuery: {
           from: [{ collectionId: 'orders' }],
-          where: {
-            fieldFilter: {
-              field: { fieldPath: 'phone' },
-              op: 'EQUAL',
-              value: { stringValue: phone }
-            }
-          },
-          limit: 20
+          orderBy: [{ field: { fieldPath: 'createdAt' }, direction: 'DESCENDING' }],
+          limit: 300
         }
       };
 
@@ -369,7 +377,8 @@
         // REST runQuery returns array; each item has .document if matched
         const orders = (results || [])
           .filter(r => r.document)
-          .map(r => parseOrderDoc(r.document));
+          .map(r => parseOrderDoc(r.document))
+          .filter(o => normalizePhone(o.phone) === normalizedInput);
 
         if (!orders.length) {
           wrap.innerHTML = '<div class="state-msg"><span class="ico">\uD83D\uDE15</span><p>No orders found for this number.<br><small style="font-size:12px;display:block;margin-top:6px;color:var(--light);">Make sure you enter the exact number used when ordering.</small></p></div>';

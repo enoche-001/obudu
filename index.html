@@ -1180,7 +1180,7 @@
     function renderProducts(items) {
       const grid = document.getElementById('shopGrid');
       if (!items.length) {
-        grid.innerHTML = '<p class="s-empty">Products coming soon. <a href="customer.html" style="color:#7B3FBE">Visit shop &#8594;</a></p>';
+        grid.innerHTML = '<p class="s-empty">Menu coming soon. <a href="customer.html" style="color:#C0533A">Visit menu &#8594;</a></p>';
         return;
       }
       grid.innerHTML = items.map((item, idx) => {
@@ -1195,12 +1195,12 @@
               ? imgs.map((src, si) => `<img class="s-slide${si===0?' s-slide-active':''}" src="${src}" alt="${item.name}" loading="lazy" decoding="async">`).join('')
               : thumb
                 ? `<img class="s-slide-solo" src="${thumb}" alt="${item.name}" loading="lazy" decoding="async">`
-                : `<div class="s-no-img">&#127873;</div>`}
+                : `<div class="s-no-img">&#127869;</div>`}
             ${disc ? `<span class="s-disc-overlay">-${disc.pct}% OFF</span>` : ''}
             ${imgs.length > 1 ? `<span class="s-img-count">&#128247; ${imgs.length} photos</span>` : ''}
           </div>
           <div class="s-body">
-            <div class="s-cat">${item.category || 'Gift'}</div>
+            <div class="s-cat">${item.category || 'Menu'}</div>
             <div class="s-name">${item.name}</div>
             <div class="s-desc">${item.description || ''}</div>
             <div class="s-foot">
